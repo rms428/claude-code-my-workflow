@@ -48,15 +48,15 @@ Repeat
 
 ---
 
-## Non-Negotiables (Customize These)
+## Non-Negotiables
 
-<!-- Replace with YOUR project's locked-in preferences -->
-
-- [YOUR PATH CONVENTION] (e.g., `here::here()` for R, relative paths for LaTeX)
-- [YOUR SEED CONVENTION] (e.g., `set.seed()` once at top for stochastic code)
-- [YOUR FIGURE STANDARDS] (e.g., white bg, 300 DPI, custom theme)
-- [YOUR COLOR PALETTE] (e.g., institutional colors)
-- [YOUR TOLERANCE THRESHOLDS] (e.g., 1e-6 for point estimates)
+- **CRS:** Always reproject to UTM Zone 37N (EPSG:32637) before area calculations or spatial joins. Input data from GEE is WGS84 — never compute areas in degrees.
+- **GEE collection:** Always document the ImageCollection ID, filterDate range, filterBounds region, and cloud threshold used. Comment these in every script.
+- **Reproducibility:** Pin GEE collection versions in comments. Export key intermediate products as GEE assets. Log asset IDs and export dates in metadata.
+- **Figure standard:** All maps must include scale bar, north arrow, legend with units, and coordinate labels. Minimum 300 DPI for exports.
+- **NDVI tolerance:** Same-date, same-sensor NDVI agreement must be within ±0.005. Larger discrepancies indicate a scale factor or masking error.
+- **Path convention:** Use `pathlib.Path` and `PROJECT_ROOT` — no hardcoded absolute paths in scripts.
+- **Seeds:** `random.seed(42)` + `np.random.seed(42)` at top of any stochastic script.
 
 ---
 
@@ -64,10 +64,10 @@ Repeat
 
 <!-- Fill in as you discover your working style -->
 
-**Visual:** [How you want figures/plots handled]
-**Reporting:** [Concise bullets? Detailed prose? Details on request?]
+**Visual:** Maps must be publication-ready (scale bar, north arrow, colorbar with units, 300 DPI). Use viridis or RdYlGn palettes — no jet.
+**Reporting:** Concise bullets for summaries; detailed prose in reports; code output on request.
 **Session logs:** Always (post-plan, incremental, end-of-session)
-**Replication:** [How strict? Flag near-misses?]
+**Replication:** Flag NDVI discrepancies > ±0.005. Flag area discrepancies > 0.1 ha. Investigate before reporting near-misses.
 
 ---
 

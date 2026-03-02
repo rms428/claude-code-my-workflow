@@ -1,12 +1,7 @@
 # CLAUDE.MD -- Academic Project Development with Claude Code
 
-<!-- HOW TO USE: Replace [BRACKETED PLACEHOLDERS] with your project info.
-     Customize Beamer environments and CSS classes for your theme.
-     Keep this file under ~150 lines — Claude loads it every session.
-     See the guide at docs/workflow-guide.html for full documentation. -->
-
-**Project:** [YOUR PROJECT NAME]
-**Institution:** [YOUR INSTITUTION]
+**Project:** Landscape-Scale Ecological Monitoring for Rangeland Governance: Kenya Case Study
+**Institution:** University of California, Santa Barbara / Mercy Corps
 **Branch:** main
 
 ---
@@ -24,20 +19,27 @@
 ## Folder Structure
 
 ```
-[YOUR-PROJECT]/
-├── CLAUDE.MD                    # This file
+claude-code-my-workflow/
+├── CLAUDE.md                    # This file
 ├── .claude/                     # Rules, skills, agents, hooks
 ├── Bibliography_base.bib        # Centralized bibliography
-├── Figures/                     # Figures and images
+├── Figures/                     # Figures, maps, and images
 ├── Preambles/header.tex         # LaTeX headers
 ├── Slides/                      # Beamer .tex files
 ├── Quarto/                      # RevealJS .qmd files + theme
+├── python/                      # Production Python scripts
+├── notebooks/                   # Jupyter notebooks (exploration)
+├── Data/
+│   ├── raw/                     # Input data (GEE remote; document source)
+│   ├── processed/               # Exported GeoTIFFs, spectral index rasters
+│   └── validation/              # Ground truth points, reference data
+├── Reports/                     # LaTeX source for papers + technical reports
 ├── docs/                        # GitHub Pages (auto-generated)
-├── scripts/                     # Utility scripts + R code
+├── scripts/                     # Utility scripts
 ├── quality_reports/             # Plans, session logs, merge reports
 ├── explorations/                # Research sandbox (see rules)
 ├── templates/                   # Session log, quality report templates
-└── master_supporting_docs/      # Papers and existing slides
+└── master_supporting_docs/      # Papers and existing materials
 ```
 
 ---
@@ -50,6 +52,12 @@ cd Slides && TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode 
 BIBINPUTS=..:$BIBINPUTS bibtex file
 TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+
+# Python / GEE
+python python/script_name.py          # Run production script
+jupyter notebook notebooks/           # Launch notebook server
+python -c "import ee; ee.Authenticate()"  # First-time GEE auth
+python -c "import ee; ee.Initialize(project='YOUR_GEE_PROJECT')"
 
 # Deploy Quarto to GitHub Pages
 ./scripts/sync_to_docs.sh LectureN
@@ -92,45 +100,39 @@ python scripts/quality_score.py Quarto/file.qmd
 | `/research-ideation [topic]` | Research questions + strategies |
 | `/interview-me [topic]` | Interactive research interview |
 | `/review-paper [file]` | Manuscript review |
-| `/data-analysis [dataset]` | End-to-end R analysis |
+| `/data-analysis [dataset]` | End-to-end analysis workflow |
 | `/learn [skill-name]` | Extract discovery into persistent skill |
 | `/context-status` | Show session health + context usage |
 | `/deep-audit` | Repository-wide consistency audit |
 
 ---
 
-<!-- CUSTOMIZE: Replace the example entries below with your own
-     Beamer environments and Quarto CSS classes. These are examples
-     from the original project — delete them and add yours. -->
-
 ## Beamer Custom Environments
 
-| Environment       | Effect        | Use Case       |
-|-------------------|---------------|----------------|
-| `[your-env]`      | [Description] | [When to use]  |
-
-<!-- Example entries (delete and replace with yours):
-| `keybox` | Gold background box | Key points |
-| `highlightbox` | Gold left-accent box | Highlights |
-| `definitionbox[Title]` | Blue-bordered titled box | Formal definitions |
--->
+| Environment          | Effect                         | Use Case                         |
+|----------------------|--------------------------------|----------------------------------|
+| `keybox`             | Gold background box            | Key findings and takeaways       |
+| `methodbox`          | Blue-bordered titled box       | Methods and protocol summaries   |
+| `resultbox`          | Green-accent box               | Main results and estimates       |
+| `highlightbox`       | Gold left-accent box           | Caveats and important notes      |
+| `definitionbox[T]`   | Blue-bordered titled box       | Formal definitions and notation  |
 
 ## Quarto CSS Classes
 
-| Class              | Effect        | Use Case       |
-|--------------------|---------------|----------------|
-| `[.your-class]`    | [Description] | [When to use]  |
-
-<!-- Example entries (delete and replace with yours):
-| `.smaller` | 85% font | Dense content slides |
-| `.positive` | Green bold | Good annotations |
--->
+| Class          | Effect              | Use Case                         |
+|----------------|---------------------|----------------------------------|
+| `.smaller`     | 85% font size       | Dense content / methods slides   |
+| `.positive`    | Green bold text     | Positive results annotations     |
+| `.callout`     | Highlighted aside   | Caveats, limitations, notes      |
+| `.map-caption` | Small italic text   | Figure/map attribution lines     |
 
 ---
 
 ## Current Project State
 
-| Lecture | Beamer | Quarto | Key Content |
-|---------|--------|--------|-------------|
-| 1: [Topic] | `Lecture01_Topic.tex` | `Lecture1_Topic.qmd` | [Brief description] |
-| 2: [Topic] | `Lecture02_Topic.tex` | -- | [Brief description] |
+| Output | File | Status | Key Content |
+|--------|------|--------|-------------|
+| Paper 1: Study Design | `Reports/paper1_design.tex` | Planned | DiD design, 50 communities, Garissa/Wajir |
+| Slides: Study Overview | `Slides/overview.tex` | Planned | Project background, Mercy Corps context |
+| Slides: Methods | `Slides/methods.tex` | Planned | GEE pipeline, NDVI/EVI, spatial analysis |
+| Slides: Preliminary Results | `Slides/results.tex` | Planned | Spectral index trends, treatment effects |
